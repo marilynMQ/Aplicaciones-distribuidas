@@ -2,11 +2,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
+
 public class CountFruits {
 
     public static void main(String[] args) {
         // Crear un arreglo de objetos de tipo Fruta
-        Fruta [] fruits = {
+        Fruit [] fruits = {
                 new Fruit("platano", true),
                 new Fruit("melon", true),
                 new Fruit("chirimoya", true),
@@ -46,7 +47,7 @@ public class CountFruits {
     public static int sequentialCount(Fruit[] fruits, boolean sweet) {
         int count = 0;
         for (Fruit fruit: fruits) {
-            if (fruit.hasTail() == sweet) {
+            if (fruit.sweet() == sweet) {
                 count++;
             }
         }
@@ -89,12 +90,12 @@ public class CountFruits {
          * @param sweet
          */
         public CountTask(Fruit[] fruits, int start, int end, int[] results, int index, boolean sweet) {
-            this.animals = fruits;
+            this.fruits = fruits;
             this.start = start;
             this.end = end;
             this.results = results;
             this.index = index;
-            this.withTail = sweet;
+            this.sweet = sweet;
         }
 
         
@@ -103,7 +104,7 @@ public class CountFruits {
         public void run() {
             int count = 0;
             for (int i = start; i < end; i++) {
-                if (fruits[i].hasTail() == sweet) {
+                if (fruits[i].sweet() == sweet) {
                     count++;
                 }
             }
