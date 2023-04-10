@@ -2,12 +2,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
-
 public class CountFruits {
 
     public static void main(String[] args) {
         // Crear un arreglo de objetos de tipo Fruta
-        Fruit [] fruits = {
+        Fruit[] fruits = {
                 new Fruit("platano", true),
                 new Fruit("melon", true),
                 new Fruit("chirimoya", true),
@@ -17,36 +16,80 @@ public class CountFruits {
                 new Fruit("naranja", false),
                 new Fruit("lima", false),
                 new Fruit("limon", false),
-              
+                new Fruit("platano", true),
+                new Fruit("melon", true),
+                new Fruit("chirimoya", true),
+                new Fruit("pera", true),
+                new Fruit("piña", false),
+                new Fruit("mandarina", false),
+                new Fruit("naranja", false),
+                new Fruit("lima", false),
+                new Fruit("limon", false),
+                new Fruit("platano", true),
+                new Fruit("melon", true),
+                new Fruit("chirimoya", true),
+                new Fruit("pera", true),
+                new Fruit("piña", false),
+                new Fruit("mandarina", false),
+                new Fruit("naranja", false),
+                new Fruit("lima", false),
+                new Fruit("limon", false),
+                new Fruit("platano", true),
+                new Fruit("melon", true),
+                new Fruit("chirimoya", true),
+                new Fruit("pera", true),
+                new Fruit("piña", false),
+                new Fruit("mandarina", false),
+                new Fruit("naranja", false),
+                new Fruit("lima", false),
+                new Fruit("limon", false),
+                new Fruit("platano", true),
+                new Fruit("melon", true),
+                new Fruit("chirimoya", true),
+                new Fruit("pera", true),
+                new Fruit("piña", false),
+                new Fruit("mandarina", false),
+                new Fruit("naranja", false),
+                new Fruit("lima", false),
+                new Fruit("limon", false),
+                new Fruit("platano", true),
+                new Fruit("melon", true),
+                new Fruit("chirimoya", true),
+                new Fruit("pera", true),
+                new Fruit("piña", false),
+                new Fruit("mandarina", false),
+                new Fruit("naranja", false),
+                new Fruit("lima", false),
+                new Fruit("limon", false),
         };
 
         // contar frutas dulces y amargos
-        long startTime = System.currentTimeMillis();
+        long tiempoInicio = System.nanoTime();
         int countSweet = parallelCount(fruits, true);
         int countBitter = parallelCount(fruits, false);
-        long endTime = System.currentTimeMillis();
+        long tiempoFin = System.nanoTime();
 
         // Imprimir resultados
         System.out.println("Número de frutas dulces: " + countSweet);
         System.out.println("Número de frutas amargas: " + countBitter);
         // System.out.println("Número de frutas dulces: " + countBitter);
-        System.out.println("Tiempo de ejecución con programación paralela: " + (endTime - startTime) + " ms");
+        System.out.println("Tiempo de ejecución con programación paralela: " + (tiempoFin - tiempoInicio));
 
-        // Contar frutas dulces y amargas  programación paralela
-        startTime = System.currentTimeMillis();
+        // Contar frutas dulces y amargas programación paralela
+        tiempoInicio = System.nanoTime();
         int countSweetSequential = sequentialCount(fruits, true);
         int countBitterSequential = sequentialCount(fruits, false);
-        endTime = System.currentTimeMillis();
+        tiempoFin = System.nanoTime();
 
         // Imprimir resultados
         System.out.println("Número de frutas dulces y amargas programación paralela: " + countSweetSequential);
         System.out.println("Número de frutas dulces y amargas programación paralela: " + countBitterSequential);
-        System.out.println("Tiempo de ejecución sin programación paralela: " + (endTime - startTime) + " ms");
+        System.out.println("Tiempo de ejecución sin programación paralela: " + (tiempoFin - tiempoInicio));
     }
 
     public static int sequentialCount(Fruit[] fruits, boolean sweet) {
         int count = 0;
-        for (Fruit fruit: fruits) {
+        for (Fruit fruit : fruits) {
             if (fruit.sweet() == sweet) {
                 count++;
             }
@@ -62,7 +105,8 @@ public class CountFruits {
         int[] results = new int[numThreads];
 
         IntStream.range(0, numThreads)
-                .mapToObj(i -> new CountTask(fruits, i * chunkSize, Math.min((i + 1) * chunkSize, fruits.length), results, i, sweet))
+                .mapToObj(i -> new CountTask(fruits, i * chunkSize, Math.min((i + 1) * chunkSize, fruits.length),
+                        results, i, sweet))
                 .forEach(executor::execute);
 
         executor.shutdown();
@@ -80,7 +124,7 @@ public class CountFruits {
         private final int[] results;
         private final int index;
         private final boolean sweet;
-    
+
         /**
          * @param animals
          * @param start
@@ -98,8 +142,6 @@ public class CountFruits {
             this.sweet = sweet;
         }
 
-        
-
         @Override
         public void run() {
             int count = 0;
@@ -109,7 +151,7 @@ public class CountFruits {
                 }
             }
             results[index] = count;
-        }   
+        }
 
-    }  
+    }
 }
